@@ -8,6 +8,16 @@
     state: enabled
   with_items: "{{ firewalld_zones }}"
 
+- name: sources | Enable specified sources
+  firewalld:
+    immediate: "{{ firewalld_apply_immediately }}"
+    permanent: "{{ firewalld_apply_permanently }}"
+    zone: "{{ item.0.zone }}"
+    source: "{{ item.1 }}"
+    state: enabled
+  with_subelements: 
+    - "{{ firewalld_zones }}"
+    - sources
 - name: services | Enable specified services
   firewalld:
     immediate: "{{ firewalld_apply_immediately }}"
