@@ -1,0 +1,31 @@
+---
+- name: zones | Assign interfaces to specified zones
+  firewalld:
+    immediate: "{{ firewalld_apply_immediately }}"
+    permanent: "{{ firewalld_apply_permanently }}"
+    zone: "{{ item.zone }}"
+    interface: "{{ item.interface }}"
+    state: enabled
+  with_items: "{{ firewalld_zones }}"
+
+- name: services | Enable specified services
+  firewalld:
+    immediate: "{{ firewalld_apply_immediately }}"
+    permanent: "{{ firewalld_apply_permanently }}"
+    zone: "{{ item.0.zone }}"
+    service: "{{ item.1 }}"
+    state: enabled
+  with_subelements: 
+    - "{{ firewalld_zones }}"
+    - services
+
+- name: ports | Enable specified ports
+  firewalld:
+    immediate: "{{ firewalld_apply_immediately }}"
+    permanent: "{{ firewalld_apply_permanently }}"
+    zone: "{{ item.0.zone }}"
+    port: "{{ item.1 }}"
+    state: enabled
+  with_subelements: 
+    - "{{ firewalld_zones }}"
+    - ports

@@ -1,0 +1,8 @@
+---
+firewalld_apply_immediately: true
+firewalld_apply_permanently: false
+firewalld_zones:
+  - zone: internal
+    interface: "{{ ansible_default_ipv4.interface }}"
+    services: []
+    ports: []

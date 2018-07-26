@@ -1,0 +1,13 @@
+---
+- name: package | Install firewalld
+  package:
+    name: firewalld
+    state: present
+
+- name: service | Ensure firewalld is up and running
+  service:
+    name: firewalld
+    state: started
+    enabled: true
+
+- include: config.yml
