@@ -3,8 +3,8 @@
   firewalld:
     immediate: "{{ firewalld_apply_immediately }}"
     permanent: "{{ firewalld_apply_permanently }}"
-    zone: "{{ item.zone }}"
-    interface: "{{ item.interface }}"
+    zone: "{{ item.zone | default('internal') }}"
+    interface: "{{ item.interface | default(ansible_default_ipv4.interface) }}"
     state: enabled
   with_items: "{{ firewalld_zones }}"
 
@@ -12,7 +12,7 @@
   firewalld:
     immediate: "{{ firewalld_apply_immediately }}"
     permanent: "{{ firewalld_apply_permanently }}"
-    zone: "{{ item.0.zone }}"
+    zone: "{{ item.0.zone | default('internal') }}"
     source: "{{ item.1 }}"
     state: enabled
   with_subelements: 
@@ -24,7 +24,7 @@
   firewalld:
     immediate: "{{ firewalld_apply_immediately }}"
     permanent: "{{ firewalld_apply_permanently }}"
-    zone: "{{ item.0.zone }}"
+    zone: "{{ item.0.zonei | default('internal') }}"
     service: "{{ item.1 }}"
     state: enabled
   with_subelements: 
@@ -36,7 +36,7 @@
   firewalld:
     immediate: "{{ firewalld_apply_immediately }}"
     permanent: "{{ firewalld_apply_permanently }}"
-    zone: "{{ item.0.zone }}"
+    zone: "{{ item.0.zone | default('internal') }}"
     port: "{{ item.1 }}"
     state: enabled
   with_subelements: 
