@@ -32,7 +32,7 @@ None.
 Example Playbooks
 ----------------
 
-### Example: Single zone
+#### Example: Single zone
 
     - hosts: web_servers
       tasks:
@@ -52,7 +52,7 @@ Example Playbooks
                 sources:
                   - 192.168.0.0/24
 
-### Example: Multiple zone
+#### Example: Multiple zone
 
     - hosts: servers
       tasks:
