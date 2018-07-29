@@ -18,6 +18,8 @@
   with_subelements: 
     - "{{ firewalld_zones }}"
     - sources
+    - skip_missing: true
+
 - name: services | Enable specified services
   firewalld:
     immediate: "{{ firewalld_apply_immediately }}"
@@ -28,6 +30,7 @@
   with_subelements: 
     - "{{ firewalld_zones }}"
     - services
+    - skip_missing: true
 
 - name: ports | Enable specified ports
   firewalld:
@@ -39,3 +42,4 @@
   with_subelements: 
     - "{{ firewalld_zones }}"
     - ports
+    - skip_missing: true
