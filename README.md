@@ -1,38 +1,85 @@
-Role Name
-=========
+Ansible Role: Firewalld
+=======================
 
-A brief description of the role goes here.
+This role is a simple wrapper over Ansible's `firewalld` module to bulk configure firewalld zones.
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+None
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+`firewalld_apply_immediately` Set this to `true` to apply all the rules immediately. Default `true`
+
+`firewalld_apply_permanently` Set this to `true` for the rules to persist across reboots. Default `false`
+
+Zone configurations with the default values. Self explanatory.
+
+    firewalld_zones:
+      - zone: internal
+        interface: "{{ ansible_default_ipv4.interface }}"
+        services: []
+        ports: []
+        sources: []
 
 Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+None.
 
-Example Playbook
+Example Playbooks
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+### Example: Single zone
+
+    - hosts: web_servers
+      tasks:
+        - include_role: 
+            name: rubentsirunyan.firewalld 
+          vars:
+            firewalld_apply_immediately: true
+            firewalld_apply_permanently: true
+            firewalld_zones:
+              - zone: internal
+                interface: eth0
+                services:
+                  - http
+                  - https
+                ports:
+                  - 8080
+                sources:
+                  - 192.168.0.0/24
+
+### Example: Multiple zone
 
     - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+      tasks:
+        - include_role: 
+            name: rubentsirunyan.firewalld 
+          vars:
+            firewalld_apply_immediately: true
+            firewalld_apply_permanently: true
+            firewalld_zones:
+              - zone: internal
+                interface: eth0
+                services:
+                  - dns
+                  - dhcp
+                sources:
+                  - 192.168.0.0/24
+              - zone: public 
+                interface: eth1
+                ports:
+                  - 10454
 
 License
 -------
 
-BSD
+GNU General Public License v3.0
 
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+This role was created by [Ruben Tsirunyan](https://github.com/rubentsirunyan)
