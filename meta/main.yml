@@ -9,14 +9,14 @@ galaxy_info:
 
   github_branch: master
 
-   platforms:
-   - name: Fedora
-     versions:
-     - 25
-   - name: CentOS
-     versions:
-     - 6
-     - 7
+  platforms:
+    - name: Fedora
+      versions:
+        - 25
+    - name: CentOS
+      versions:
+        - 6
+        - 7
 
   galaxy_tags:
     - firewalld
